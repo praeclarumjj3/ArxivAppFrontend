@@ -16,5 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Implement dependencies
+      run: flutter pub get
     - name: Run tests
       run: pub run test
