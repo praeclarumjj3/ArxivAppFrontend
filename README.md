@@ -1,5 +1,8 @@
 # ArxivAppFrontend
 
+![Dart CI](https://github.com/praeclarumjj3/ArxivAppFrontend/workflows/Dart%20CI/badge.svg?branch=master)
+![Framework: Flutter](https://img.shields.io/badge/Framework-Flutter-blue.svg)
+
 A new Flutter project.
 
 ## Getting Started

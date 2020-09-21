@@ -24,8 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor:
-          Colors.red, //or set color with: Color(0xFF0000FF)
+      statusBarColor: Colors.red, //or set color with: Color(0xFF0000FF)
     ));
     ScreenUtil.init(context, width: 360, height: 746, allowFontScaling: true);
     return MaterialApp(
@@ -34,14 +33,14 @@ class MyApp extends StatelessWidget {
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: CustomRouter.generateRoute,
       theme: ThemeData(
-        primaryColor: Colors.red,
+          primaryColor: Colors.red,
           indicatorColor: Colors.black,
           backgroundColor: Colors.white,
           textTheme: TextTheme(
-            headline1: TextStyle(
-              fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
-              fontWeight: FontWeight.w300,)
-          )),
+              headline1: TextStyle(
+            fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
+            fontWeight: FontWeight.w300,
+          ))),
       home: StartUpView(),
     );
   }

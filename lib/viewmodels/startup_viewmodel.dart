@@ -11,5 +11,4 @@ class StartUpViewModel extends BaseViewModel {
     // await Future.delayed(Duration(seconds: 1));
     return _navigationService.pushNamedAndRemoveUntil(HomeView.id);
   }
-
 }

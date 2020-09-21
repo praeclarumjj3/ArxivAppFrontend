@@ -4,7 +4,6 @@ class LocalStorageService {
   static LocalStorageService _instance;
   static SharedPreferences _preferences;
 
-
   static Future<LocalStorageService> getInstance() async {
     _instance ??= LocalStorageService();
 
@@ -12,5 +11,4 @@ class LocalStorageService {
 
     return _instance;
   }
-
 }
