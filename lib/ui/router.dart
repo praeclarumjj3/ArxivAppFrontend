@@ -5,7 +5,10 @@ class CustomRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case HomeView.id:
-        return MaterialPageRoute(builder: (_) => HomeView());
+        return MaterialPageRoute(
+            builder: (_) => HomeView(
+                  index: 0,
+                ));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

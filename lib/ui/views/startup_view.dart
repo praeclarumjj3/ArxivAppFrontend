@@ -19,12 +19,16 @@ class StartUpView extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(15)),
                   child: Container(
-                    width: ScreenUtil().setWidth(340),
-                    height: ScreenUtil().setHeight(400),
-                    child: Image(
-                      image: AssetImage('assets/IITR_new_logo_color.jpg'),
-                    ),
-                  ),
+                      width: ScreenUtil().setWidth(340),
+                      height: ScreenUtil().setHeight(400),
+                      child: Center(
+                          child: Text(
+                        'ArxivAPP',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1
+                            .copyWith(color: Colors.red),
+                      ))),
                 ),
               ],
             ),

@@ -8,7 +8,7 @@ class StartUpViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
 
   Future<void> onModelReady() async {
-    // await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 2));
     return _navigationService.pushNamedAndRemoveUntil(HomeView.id);
   }
 }

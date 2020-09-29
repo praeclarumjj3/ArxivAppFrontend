@@ -36,11 +36,21 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.red,
           indicatorColor: Colors.black,
           backgroundColor: Colors.white,
+          primarySwatch: Colors.red,
           textTheme: TextTheme(
-              headline1: TextStyle(
-            fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
-            fontWeight: FontWeight.w300,
-          ))),
+            headline1: TextStyle(
+              fontSize: ScreenUtil().setSp(50, allowFontScalingSelf: true),
+              fontWeight: FontWeight.w600,
+            ),
+            headline2: TextStyle(
+              fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
+              fontWeight: FontWeight.w300,
+            ),
+            bodyText1: TextStyle(
+                fontSize: ScreenUtil().setSp(12, allowFontScalingSelf: true),
+                fontWeight: FontWeight.w600,
+                color: Colors.red),
+          )),
       home: StartUpView(),
     );
   }
