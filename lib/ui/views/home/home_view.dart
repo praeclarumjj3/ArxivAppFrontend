@@ -25,7 +25,6 @@ class _HomeViewState extends State<HomeView>
     with TickerProviderStateMixin<HomeView> {
   int _currentIndex = 0;
   final Connectivity _connectivity = Connectivity();
-
   String _connectionStatus;
   bool isLoading;
 

@@ -14,6 +14,7 @@ class _DownloadViewState extends State<DownloadView> {
   Widget build(BuildContext context) {
     return BaseView<DownloadViewModel>(
       builder: (context, model, child) => Scaffold(
+        appBar: null,
         body: Center(
           child: Text(
             'Download View',

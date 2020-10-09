@@ -42,6 +42,10 @@ class MyApp extends StatelessWidget {
               fontSize: ScreenUtil().setSp(50, allowFontScalingSelf: true),
               fontWeight: FontWeight.w600,
             ),
+            bodyText2: TextStyle(
+              fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
+              fontWeight: FontWeight.w300,
+            ),
             headline2: TextStyle(
               fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
               fontWeight: FontWeight.w300,
