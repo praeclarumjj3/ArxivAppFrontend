@@ -1,3 +1,6 @@
+import 'package:arxiv_app/models/paper.dart';
+import 'package:arxiv_app/models/user.dart';
+import 'package:arxiv_app/ui/components/paper_card.dart';
 import 'package:arxiv_app/viewmodels/papers/paper_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -13,7 +16,7 @@ class PaperView extends StatefulWidget {
 class _PaperViewState extends State<PaperView> {
   SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  // Future<List<Paper>> papers;
+  Future<List<Paper>> papers;
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -44,62 +47,36 @@ class _PaperViewState extends State<PaperView> {
         });
   }
 
-  // Widget paperList() {
-  //   return Expanded(
-  //       child: FutureBuilder<List>(
-  //         future: papers,
-  //         builder: (context, snapshot) {
-  //           print(snapshot.hasData);
-  //           return snapshot.hasData
-  //               ? snapshot.data.isEmpty
-  //               ? Center(
-  //             child: Column(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: <Widget>[
-  //                 Text(
-  //                   'Add Tasks to better track your time!',
-  //                   style: GoogleFonts.poppins(
-  //                       textStyle: TextStyle(
-  //                           fontSize: ScreenUtil()
-  //                               .setSp(40, allowFontScalingSelf: true),
-  //                           fontWeight: FontWeight.w600,
-  //                           color: Colors.grey)),
-  //                 ),
-  //               ],
-  //             ),
-  //           )
-  //               : ListView.builder(
-  //             shrinkWrap: true,
-  //             itemCount: snapshot.data.length,
-  //             itemBuilder: (context, position) {
-  //               return PaperCard(
-  //                 title: 'JJ Rocks',
-  //               );
-  //             },
-  //           )
-  //               : Center(
-  //             child: CircularProgressIndicator(
-  //                 value: null,
-  //                 valueColor:
-  //                 AlwaysStoppedAnimation<Color>(Colors.blue)),
-  //           );
-  //         },
-  //       ));
-  // }
-
   @override
   Widget build(BuildContext context) {
     return BaseView<PaperViewModel>(
-      builder: (context, model, child) => Scaffold(
-        appBar: searchBar.build(context),
-        key: _scaffoldKey,
-        body: Center(
-          child: Text(
-            'Paper View',
-            style: TextStyle(fontSize: 40, color: Colors.black),
-          ),
-        ),
-      ),
-    );
+        onModelReady: (model) {
+          model.setPapers();
+        },
+        builder: (context, model, child) => Scaffold(
+            appBar: searchBar.build(context),
+            key: _scaffoldKey,
+            body: Center(
+              child: model.papers.isEmpty
+                  ? Text(
+                      'Search something',
+                      style: Theme.of(context).textTheme.headline2,
+                    )
+                  : ListView.builder(
+                      itemCount: model.papers.length,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return PaperCard(
+                          paper: model.papers[index],
+                          user: User(
+                              id: 1,
+                              emailAddress: 'jjjj',
+                              downloads: [],
+                              bookmarks: [],
+                              profilePicture: null,
+                              fullName: 'jshshhs',
+                              username: 'jsjsjs'),
+                        );
+                      }),
+            )));
   }
 }

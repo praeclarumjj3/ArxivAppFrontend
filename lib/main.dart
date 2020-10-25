@@ -1,6 +1,7 @@
 import 'package:arxiv_app/ui/views/startup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:get/get.dart';
 import 'locator.dart';
@@ -11,6 +12,9 @@ import 'ui/router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(
+      debug: true // optional: set false to disable printing logs to console
+      );
   await setupLocator();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -46,8 +50,8 @@ class MyApp extends StatelessWidget {
               fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
               fontWeight: FontWeight.w300,
             ),
-            headline2: TextStyle(
-              fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
+            subtitle1: TextStyle(
+              fontSize: ScreenUtil().setSp(10, allowFontScalingSelf: true),
               fontWeight: FontWeight.w300,
             ),
             bodyText1: TextStyle(
