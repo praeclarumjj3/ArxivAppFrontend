@@ -93,7 +93,10 @@ class _PaperCardState extends State<PaperCard> {
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
-      throw 'Could not launch $url';
+      setState(() => _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+              content:
+              Text('URL is invalid!'))));
     }
   }
 
