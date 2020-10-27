@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:arxiv_app/models/paper.dart';
 import 'package:arxiv_app/models/user.dart';
@@ -29,7 +30,6 @@ class _PaperCardState extends State<PaperCard> {
   bool _permissionReady;
   String _localPath;
   final ReceivePort _port = ReceivePort();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -93,10 +93,14 @@ class _PaperCardState extends State<PaperCard> {
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
-      setState(() => _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-              content:
-              Text('URL is invalid!'))));
+      await Fluttertoast.showToast(
+          msg: "Can't open the url!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: ScreenUtil().setSp(12, allowFontScalingSelf: true));
     }
   }
 
@@ -168,10 +172,6 @@ class _PaperCardState extends State<PaperCard> {
                           : Icons.file_download),
                       onPressed: () async {
                         if (_isDownloaded) {
-                          setState(() => _scaffoldKey.currentState.showSnackBar(
-                              SnackBar(
-                                  content:
-                                      Text('Paper is already downloaded!'))));
                         } else {
                           if (_permissionReady) {
                             await download(widget.paper.pdfUrl);
