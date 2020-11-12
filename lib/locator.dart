@@ -1,6 +1,7 @@
 import 'package:arxiv_app/viewmodels/bookmarks/bookmark_viewmodel.dart';
 import 'package:arxiv_app/viewmodels/downloads/download_viewmodel.dart';
 import 'package:arxiv_app/viewmodels/forum/forum_viewmodel.dart';
+import 'package:arxiv_app/viewmodels/login/login_viewmodel.dart';
 import 'package:arxiv_app/viewmodels/papers/paper_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'services/local_storage_service.dart';
@@ -17,6 +18,7 @@ Future<void> setupLocator() async {
   locator.registerSingleton<LocalStorageService>(localStorageService);
 
   locator.registerFactory(() => StartUpViewModel());
+  locator.registerFactory(() => LoginViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => PaperViewModel());
   locator.registerFactory(() => BookMarkViewModel());

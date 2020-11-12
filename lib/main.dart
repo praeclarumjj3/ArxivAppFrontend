@@ -42,23 +42,26 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           primarySwatch: Colors.red,
           textTheme: TextTheme(
-            headline1: TextStyle(
-              fontSize: ScreenUtil().setSp(50, allowFontScalingSelf: true),
-              fontWeight: FontWeight.w600,
-            ),
-            bodyText2: TextStyle(
-              fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
-              fontWeight: FontWeight.w300,
-            ),
-            subtitle1: TextStyle(
-              fontSize: ScreenUtil().setSp(10, allowFontScalingSelf: true),
-              fontWeight: FontWeight.w300,
-            ),
-            bodyText1: TextStyle(
-                fontSize: ScreenUtil().setSp(12, allowFontScalingSelf: true),
+              headline1: TextStyle(
+                fontSize: ScreenUtil().setSp(50, allowFontScalingSelf: true),
                 fontWeight: FontWeight.w600,
-                color: Colors.red),
-          )),
+              ),
+              bodyText2: TextStyle(
+                fontSize: ScreenUtil().setSp(24, allowFontScalingSelf: true),
+                fontWeight: FontWeight.w300,
+              ),
+              subtitle1: TextStyle(
+                fontSize: ScreenUtil().setSp(10, allowFontScalingSelf: true),
+                fontWeight: FontWeight.w300,
+              ),
+              bodyText1: TextStyle(
+                  fontSize: ScreenUtil().setSp(12, allowFontScalingSelf: true),
+                  fontWeight: FontWeight.w600,
+                  color: Colors.red),
+              button: TextStyle(
+                  fontSize: ScreenUtil().setSp(16, allowFontScalingSelf: true),
+                  fontWeight: FontWeight.w600,
+                  color: Colors.red))),
       home: StartUpView(),
     );
   }
