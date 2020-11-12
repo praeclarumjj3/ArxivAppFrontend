@@ -1,6 +1,5 @@
 import 'package:arxiv_app/viewmodels/bookmarks/bookmark_viewmodel.dart';
 import 'package:arxiv_app/viewmodels/downloads/download_viewmodel.dart';
-import 'package:arxiv_app/viewmodels/forum/forum_viewmodel.dart';
 import 'package:arxiv_app/viewmodels/login/login_viewmodel.dart';
 import 'package:arxiv_app/viewmodels/papers/paper_viewmodel.dart';
 import 'package:get_it/get_it.dart';
@@ -23,5 +22,4 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => PaperViewModel());
   locator.registerFactory(() => BookMarkViewModel());
   locator.registerFactory(() => DownloadViewModel());
-  locator.registerFactory(() => ForumViewModel());
 }

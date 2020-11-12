@@ -3,8 +3,6 @@ import 'package:arxiv_app/viewmodels/login/login_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:oauth2_client/google_oauth2_client.dart';
-import 'package:oauth2_client/oauth2_helper.dart';
 import '../../base_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -16,22 +14,6 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  Future<void> fetchFiles() async {
-    var hlp = OAuth2Helper(GoogleOAuth2Client(
-        redirectUri: 'com.teranet.app:/oauth2redirect',
-        customUriScheme: 'com.teranet.app'));
-
-    hlp.setAuthorizationParams(
-        grantType: OAuth2Helper.AUTHORIZATION_CODE,
-        clientId: 'XXX-XXX-XXX',
-        clientSecret: 'XXX-XXX-XXX',
-        scopes: ['https://www.googleapis.com/auth/drive.readonly']);
-
-    var resp = await hlp.get('https://www.googleapis.com/drive/v3/files');
-
-    print(resp.body);
-  }
 
   @override
   Widget build(BuildContext context) {
