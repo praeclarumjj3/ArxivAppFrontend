@@ -1,4 +1,5 @@
 import 'package:arxiv_app/ui/views/startup_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -16,6 +17,7 @@ Future<void> main() async {
       debug: true // optional: set false to disable printing logs to console
       );
   await setupLocator();
+  await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(GetMaterialApp(

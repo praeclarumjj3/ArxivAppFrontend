@@ -14,7 +14,6 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
@@ -46,7 +45,11 @@ class _LoginViewState extends State<LoginView> {
                         ScreenUtil().setHeight(20)),
                     child: FlatButton(
                         onPressed: () {
-                          model.navigate(HomeView.id);
+                          model.signInWithGoogle().then((result) {
+                            if (result != null) {
+                              model.navigate(HomeView.id);
+                            }
+                          });
                         },
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(
