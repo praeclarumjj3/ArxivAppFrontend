@@ -14,32 +14,27 @@ class Blog {
     this.title,
     this.body,
     this.author,
-    this.upvotes,
-    this.downvotes,
+    this.votes,
   });
 
   int id;
   String title;
   String body;
   int author;
-  int upvotes;
-  int downvotes;
+  int votes;
 
   factory Blog.fromJson(Map<String, dynamic> json) => Blog(
-        id: json['id'],
-        title: json['title'],
-        body: json['body'],
-        author: json['author'],
-        upvotes: json['upvotes'],
-        downvotes: json['downvotes'],
-      );
+      id: json['id'],
+      title: json['title'],
+      body: json['body'],
+      author: json['author'],
+      votes: json['votes']);
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
         'body': body,
         'author': author,
-        'upvotes': upvotes,
-        'downvotes': downvotes,
+        'votes': votes
       };
 }

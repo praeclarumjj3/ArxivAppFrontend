@@ -11,4 +11,5 @@ const List<Destination> allDestinations = <Destination>[
   Destination('Papers Hub', Icons.home),
   Destination('Bookmarks', Icons.bookmark),
   Destination('Downloads', Icons.file_download),
+  Destination('Forum', Icons.forum),
 ];

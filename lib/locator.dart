@@ -1,3 +1,4 @@
+import 'package:arxiv_app/viewmodels/blog/blog_viewmodel.dart';
 import 'package:arxiv_app/viewmodels/bookmarks/bookmark_viewmodel.dart';
 import 'package:arxiv_app/viewmodels/downloads/download_viewmodel.dart';
 import 'package:arxiv_app/viewmodels/login/login_viewmodel.dart';
@@ -22,4 +23,5 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => PaperViewModel());
   locator.registerFactory(() => BookMarkViewModel());
   locator.registerFactory(() => DownloadViewModel());
+  locator.registerFactory(() => BlogViewModel());
 }

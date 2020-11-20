@@ -1,4 +1,5 @@
 import 'package:arxiv_app/ui/utils/destination.dart';
+import 'package:arxiv_app/ui/views/blog/blog_view.dart';
 import 'package:arxiv_app/ui/views/bookmarks/bookmark_view.dart';
 import 'package:arxiv_app/ui/views/downloads/download_view.dart';
 import 'package:arxiv_app/ui/views/papers/papers_view.dart';
@@ -71,12 +72,14 @@ class _HomeViewState extends State<HomeView>
                     )
                   : SafeArea(
                       top: false,
-                      child:
-                          IndexedStack(index: _currentIndex, children: <Widget>[
-                        PaperView(),
-                        BookMarkView(),
-                        DownloadView(),
-                      ]),
+                      child: IndexedStack(
+                          index: _currentIndex,
+                          children: <Widget>[
+                            PaperView(),
+                            BookMarkView(),
+                            DownloadView(),
+                            BlogView()
+                          ]),
                     ),
               bottomNavigationBar: BottomNavigationBar(
                 currentIndex: _currentIndex,
