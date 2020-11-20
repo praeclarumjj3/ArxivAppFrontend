@@ -4,57 +4,11 @@
 
 import 'dart:convert';
 
-List<User> userFromJson(String str) =>
-    List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
+List<Bookmark> bookmarkFromJson(String str) =>
+    List<Bookmark>.from(json.decode(str).map((x) => Bookmark.fromJson(x)));
 
-String userToJson(List<User> data) =>
+String bookmarkToJson(List<Bookmark> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class User {
-  User({
-    this.id,
-    this.username,
-    this.fullName,
-    this.profilePicture,
-    this.emailAddress,
-    this.bookmarks,
-    this.downloads,
-  });
-
-  int id;
-  String username;
-  String fullName;
-  String profilePicture;
-  String emailAddress;
-  List<Bookmark> bookmarks;
-  List<Bookmark> downloads;
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json['id'],
-        username: json['username'],
-        fullName: json['full_name'],
-        profilePicture: json['profile_picture'],
-        emailAddress: json['email_address'],
-        bookmarks: List<Bookmark>.from(
-            json['bookmarks'].map((x) => Bookmark.fromJson(x))),
-        downloads: json['downloads'] == null
-            ? null
-            : List<Bookmark>.from(
-                json['downloads'].map((x) => Bookmark.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'username': username,
-        'full_name': fullName,
-        'profile_picture': profilePicture,
-        'email_address': emailAddress,
-        'bookmarks': List<dynamic>.from(bookmarks.map((x) => x.toJson())),
-        'downloads': downloads == null
-            ? null
-            : List<dynamic>.from(downloads.map((x) => x.toJson())),
-      };
-}
 
 class Bookmark {
   Bookmark({

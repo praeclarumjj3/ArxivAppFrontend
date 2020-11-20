@@ -10,6 +10,7 @@ class Destination {
 const List<Destination> allDestinations = <Destination>[
   Destination('Papers Hub', Icons.home),
   Destination('Bookmarks', Icons.bookmark),
+  Destination('Profile', Icons.person),
   Destination('Downloads', Icons.file_download),
   Destination('Forum', Icons.forum),
 ];

@@ -1,5 +1,4 @@
 import 'package:arxiv_app/models/paper.dart';
-import 'package:arxiv_app/models/user.dart';
 import 'package:arxiv_app/ui/components/bookmark_card.dart';
 import 'package:arxiv_app/viewmodels/bookmarks/bookmark_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +26,9 @@ class _BookMarkState extends State<BookMarkView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<BookMarkViewModel>(
+    return BaseView<BookmarkViewModel>(
         onModelReady: (model) {
-          model.setBookmarks();
+          model.getBookmarks();
         },
         builder: (context, model, child) => Scaffold(
             appBar: buildAppBar(context),
@@ -37,23 +36,15 @@ class _BookMarkState extends State<BookMarkView> {
             body: Center(
               child: model.bookmarks.isEmpty
                   ? Text(
-                      'Search something',
-                      style: Theme.of(context).textTheme.headline2,
+                      'No Bookmarks!',
+                      style: Theme.of(context).textTheme.bodyText2,
+                      textAlign: TextAlign.center,
                     )
                   : ListView.builder(
                       itemCount: model.bookmarks.length,
                       itemBuilder: (BuildContext ctxt, int index) {
                         return BookmarkCard(
-                          paper: model.bookmarks[index],
-                          user: User(
-                              id: 1,
-                              emailAddress: 'jjjj',
-                              downloads: [],
-                              bookmarks: [],
-                              profilePicture: null,
-                              fullName: 'jshshhs',
-                              username: 'jsjsjs'),
-                        );
+                            bookmark: model.bookmarks[index], model: model);
                       }),
             )));
   }

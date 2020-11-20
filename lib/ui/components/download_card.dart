@@ -1,6 +1,7 @@
-import 'package:arxiv_app/models/paper.dart';
-import 'package:arxiv_app/models/user.dart';
+import 'dart:io';
+import 'package:arxiv_app/models/bookmark.dart';
 import 'package:arxiv_app/ui/views/home/home_view.dart';
+import 'package:arxiv_app/viewmodels/downloads/download_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -11,10 +12,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class DownloadCard extends StatefulWidget {
-  DownloadCard({this.paper, this.user});
+  DownloadCard({this.download, this.model});
 
-  Paper paper;
-  User user;
+  Bookmark download;
+  DownloadViewModel model;
 
   @override
   _DownloadCardState createState() => _DownloadCardState();
@@ -33,6 +34,20 @@ class _DownloadCardState extends State<DownloadCard> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: ScreenUtil().setSp(12, allowFontScalingSelf: true));
+    }
+  }
+
+  Future<void> deleteFile(String path) async {
+    try {
+      var file = File(path);
+
+      if (await file.exists()) {
+        // file exits, it is safe to call delete on it
+        await file.delete();
+      }
+    } catch (e) {
+      // error in getting access to the file
+      print(e);
     }
   }
 
@@ -77,7 +92,7 @@ class _DownloadCardState extends State<DownloadCard> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text(widget.paper.title,
+                        Text(widget.download.title,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
@@ -89,7 +104,7 @@ class _DownloadCardState extends State<DownloadCard> {
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                     DateFormat('dd/MM/yyyy').format(
-                                        widget.paper.datetimePaperPublished),
+                                        widget.download.datetimePaperPublished),
                                     style:
                                         Theme.of(context).textTheme.subtitle1)))
                       ]),
@@ -98,7 +113,7 @@ class _DownloadCardState extends State<DownloadCard> {
                   ),
                   Align(
                       alignment: Alignment.centerRight,
-                      child: Text(widget.paper.authors,
+                      child: Text(widget.download.authors,
                           style: Theme.of(context).textTheme.subtitle1))
                 ])),
             Align(
@@ -112,27 +127,11 @@ class _DownloadCardState extends State<DownloadCard> {
                           iconSize: ScreenUtil().setHeight(20),
                           icon: Icon(Icons.delete),
                           onPressed: () {
-                            setState(() {
-                              widget.user.downloads.remove(Bookmark(
-                                  id: widget.paper.id,
-                                  datetimeCreated: DateTime.now(),
-                                  datetimeModified: DateTime.now(),
-                                  title: widget.paper.title,
-                                  authors: widget.paper.authors,
-                                  summary: widget.paper.summary,
-                                  comment: widget.paper.comment,
-                                  subjectClassification:
-                                      widget.paper.subjectClassification,
-                                  category: widget.paper.category,
-                                  arxivId: widget.paper.arxivId,
-                                  htmlUrl: widget.paper.htmlUrl,
-                                  pdfUrl: widget.paper.pdfUrl,
-                                  datetimePaperPublished:
-                                      widget.paper.datetimePaperPublished,
-                                  datetimePaperUpdated:
-                                      widget.paper.datetimePaperUpdated,
-                                  mediaUrl: 'path'));
-                            });
+                            widget.model.modifyDownload(
+                                'remove',
+                                widget.download.arxivId,
+                                widget.download.mediaUrl);
+                            deleteFile(widget.download.mediaUrl);
                             Future.delayed(Duration(milliseconds: 500), () {
                               Navigator.of(context).pop();
                               Navigator.pushAndRemoveUntil(
@@ -148,7 +147,7 @@ class _DownloadCardState extends State<DownloadCard> {
                           iconSize: ScreenUtil().setHeight(20),
                           icon: Icon(Icons.open_in_browser),
                           onPressed: () {
-                            _launchInBrowser(widget.paper.htmlUrl);
+                            _launchInBrowser(widget.download.htmlUrl);
                           })
                     ]))
           ],

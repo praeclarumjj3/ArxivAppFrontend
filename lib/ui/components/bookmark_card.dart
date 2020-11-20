@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
-
-import 'package:arxiv_app/models/paper.dart';
-import 'package:arxiv_app/models/user.dart';
+import 'package:arxiv_app/models/bookmark.dart';
 import 'package:arxiv_app/ui/views/home/home_view.dart';
+import 'package:arxiv_app/viewmodels/bookmarks/bookmark_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -17,10 +16,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class BookmarkCard extends StatefulWidget {
-  BookmarkCard({this.paper, this.user});
+  BookmarkCard({this.bookmark, this.model});
 
-  Paper paper;
-  User user;
+  Bookmark bookmark;
+  BookmarkViewModel model;
 
   @override
   _BookmarkCardState createState() => _BookmarkCardState();
@@ -169,7 +168,7 @@ class _BookmarkCardState extends State<BookmarkCard> {
                       iconSize: ScreenUtil().setWidth(40),
                       icon: Icon(Icons.open_in_browser),
                       onPressed: () {
-                        _launchInBrowser(widget.paper.htmlUrl);
+                        _launchInBrowser(widget.bookmark.htmlUrl);
                       })
                 ]),
             Expanded(
@@ -181,7 +180,7 @@ class _BookmarkCardState extends State<BookmarkCard> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text(widget.paper.title,
+                        Text(widget.bookmark.title,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
@@ -193,7 +192,7 @@ class _BookmarkCardState extends State<BookmarkCard> {
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                     DateFormat('dd/MM/yyyy').format(
-                                        widget.paper.datetimePaperPublished),
+                                        widget.bookmark.datetimePaperPublished),
                                     style:
                                         Theme.of(context).textTheme.subtitle1)))
                       ]),
@@ -202,7 +201,7 @@ class _BookmarkCardState extends State<BookmarkCard> {
                   ),
                   Align(
                       alignment: Alignment.centerRight,
-                      child: Text(widget.paper.authors,
+                      child: Text(widget.bookmark.authors,
                           style: Theme.of(context).textTheme.subtitle1))
                 ])),
             Align(
@@ -216,27 +215,8 @@ class _BookmarkCardState extends State<BookmarkCard> {
                           iconSize: ScreenUtil().setHeight(20),
                           icon: Icon(Icons.delete),
                           onPressed: () {
-                            setState(() {
-                              widget.user.bookmarks.remove(Bookmark(
-                                  id: widget.paper.id,
-                                  datetimeCreated: DateTime.now(),
-                                  datetimeModified: DateTime.now(),
-                                  title: widget.paper.title,
-                                  authors: widget.paper.authors,
-                                  summary: widget.paper.summary,
-                                  comment: widget.paper.comment,
-                                  subjectClassification:
-                                      widget.paper.subjectClassification,
-                                  category: widget.paper.category,
-                                  arxivId: widget.paper.arxivId,
-                                  htmlUrl: widget.paper.htmlUrl,
-                                  pdfUrl: widget.paper.pdfUrl,
-                                  datetimePaperPublished:
-                                      widget.paper.datetimePaperPublished,
-                                  datetimePaperUpdated:
-                                      widget.paper.datetimePaperUpdated,
-                                  mediaUrl: null));
-                            });
+                            widget.model.modifyBookmark(
+                                'remove', widget.bookmark.arxivId);
                             Future.delayed(Duration(milliseconds: 500), () {
                               Navigator.of(context).pop();
                               Navigator.pushAndRemoveUntil(
@@ -254,34 +234,22 @@ class _BookmarkCardState extends State<BookmarkCard> {
                               ? Icons.check_circle_outline
                               : Icons.file_download),
                           onPressed: () async {
-                            if (_permissionReady) {
-                              await download(widget.paper.pdfUrl);
-                              setState(() {
-                                _isDownloaded = true;
-                                widget.user.downloads.add(Bookmark(
-                                    id: widget.paper.id,
-                                    datetimeCreated: DateTime.now(),
-                                    datetimeModified: DateTime.now(),
-                                    title: widget.paper.title,
-                                    authors: widget.paper.authors,
-                                    summary: widget.paper.summary,
-                                    comment: widget.paper.comment,
-                                    subjectClassification:
-                                        widget.paper.subjectClassification,
-                                    category: widget.paper.category,
-                                    arxivId: widget.paper.arxivId,
-                                    htmlUrl: widget.paper.htmlUrl,
-                                    pdfUrl: widget.paper.pdfUrl,
-                                    datetimePaperPublished:
-                                        widget.paper.datetimePaperPublished,
-                                    datetimePaperUpdated:
-                                        widget.paper.datetimePaperUpdated,
-                                    mediaUrl: _localPath +
-                                        Platform.pathSeparator +
-                                        widget.paper.pdfUrl.split('pdf/')[1]));
-                              });
-                            } else {
-                              _buildNoPermissionWarning();
+                            if (!_isDownloaded) {
+                              if (_permissionReady) {
+                                await download(widget.bookmark.pdfUrl);
+                                setState(() {
+                                  _isDownloaded = true;
+                                  widget.model.modifyDownload(
+                                      'add',
+                                      widget.bookmark.arxivId,
+                                      _localPath +
+                                          Platform.pathSeparator +
+                                          widget.bookmark.pdfUrl
+                                              .split('pdf/')[1]);
+                                });
+                              } else {
+                                _buildNoPermissionWarning();
+                              }
                             }
                           })
                     ]))

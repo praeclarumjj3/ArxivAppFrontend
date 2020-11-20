@@ -29,7 +29,7 @@ class _BlogViewState extends State<BlogView> {
   Widget build(BuildContext context) {
     return BaseView<BlogViewModel>(
         builder: (context, model, child) => Scaffold(
-            appBar: searchBar.build(context),
+            appBar: buildAppBar(context),
             key: _scaffoldKey,
             body: Center(
                 child: Text(

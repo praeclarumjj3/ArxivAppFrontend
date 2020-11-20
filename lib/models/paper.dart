@@ -4,9 +4,10 @@
 
 import 'dart:convert';
 
-Paper paperFromJson(String str) => Paper.fromJson(json.decode(str));
-
 String paperToJson(Paper data) => json.encode(data.toJson());
+
+List<Paper> paperFromJson(String str) =>
+    List<Paper>.from(json.decode(str).map((x) => Paper.fromJson(x)));
 
 class Paper {
   Paper({
