@@ -1,8 +1,10 @@
-import 'package:arxiv_app/models/paper.dart';
+import 'package:arxiv_app/models/blog.dart';
 import 'package:arxiv_app/viewmodels/blog/blog_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import '../../base_view.dart';
+import 'package:arxiv_app/ui/components/blog_card_temp.dart';
+import 'package:arxiv_app/models/blog.dart';
 
 class BlogView extends StatefulWidget {
   static const String id = 'blog_view';
@@ -14,7 +16,7 @@ class BlogView extends StatefulWidget {
 class _BlogViewState extends State<BlogView> {
   SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Future<List<Paper>> papers;
+  Future<List<Blog>> papers;
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -29,12 +31,13 @@ class _BlogViewState extends State<BlogView> {
   Widget build(BuildContext context) {
     return BaseView<BlogViewModel>(
         builder: (context, model, child) => Scaffold(
-            appBar: searchBar.build(context),
+            appBar: buildAppBar(context),
             key: _scaffoldKey,
-            body: Center(
-                child: Text(
-              'Forum View',
-              style: Theme.of(context).textTheme.headline2,
-            ))));
+            body: Center(child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+              return BlogCard(
+                
+              );
+            }))));
   }
 }

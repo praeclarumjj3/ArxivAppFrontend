@@ -28,13 +28,14 @@ class Blog {
       title: json['title'],
       body: json['body'],
       author: json['author'],
-      votes: json['votes']);
+      votes: json['votes'],
+  );
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
         'body': body,
         'author': author,
-        'votes': votes
-      };
+        'votes': votes,
+  };
 }
