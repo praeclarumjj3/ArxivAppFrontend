@@ -1,4 +1,5 @@
 import 'package:arxiv_app/enums/viewstate.dart';
+import 'package:arxiv_app/services/auth_service.dart';
 import 'package:arxiv_app/services/local_storage_service.dart';
 import 'package:arxiv_app/services/navigation_service.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class LoginViewModel extends BaseViewModel {
   User _currentUser;
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
+  final AuthService _authService = locator<AuthService>();
 
   void navigate(String id) {
     _navigationService.pushNamedAndRemoveUntil(id);
@@ -34,18 +36,39 @@ class LoginViewModel extends BaseViewModel {
     var authResult = await _auth.signInWithCredential(credential);
     // ignore: omit_local_variable_types
     User user = authResult.user;
-
     if (user != null) {
-      setState(ViewState.Idle);
       assert(!user.isAnonymous);
       assert(await user.getIdToken() != null);
+
+      _localStorageService.username = user.displayName;
+      _localStorageService.userEmail = user.email;
+      _localStorageService.userPic = user.photoURL;
+
+      dynamic result = await _authService.getAuthToken(
+          _localStorageService.username,
+          _localStorageService.userEmail,
+          _localStorageService.userPic);
+      if (result == false) {
+        setState(ViewState.Error);
+        setErrorMessage('User not Saved!');
+        setState(ViewState.Error);
+        await Fluttertoast.showToast(
+            msg: 'User not Saved!',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: ScreenUtil().setSp(12, allowFontScalingSelf: true));
+        return null;
+      } else {
+        _localStorageService.isLoggedIn = true;
+        setState(ViewState.Idle);
+      }
       _currentUser = _auth.currentUser;
-      notifyListeners();
-      _localStorageService.isLoggedIn = true;
       assert(user.uid == _currentUser.uid);
-
-      print('signInWithGoogle succeeded: $user');
-
+      notifyListeners();
+      setState(ViewState.Idle);
       return '$user';
     } else {
       setState(ViewState.Error);
@@ -64,6 +87,7 @@ class LoginViewModel extends BaseViewModel {
   Future<void> signOutGoogle() async {
     setState(ViewState.Busy);
     await googleSignIn.signOut();
+    _localStorageService.isLoggedIn = false;
     setState(ViewState.Idle);
     print('User Signed Out');
   }

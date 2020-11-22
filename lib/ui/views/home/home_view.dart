@@ -3,6 +3,7 @@ import 'package:arxiv_app/ui/views/blog/blog_view.dart';
 import 'package:arxiv_app/ui/views/bookmarks/bookmark_view.dart';
 import 'package:arxiv_app/ui/views/downloads/download_view.dart';
 import 'package:arxiv_app/ui/views/papers/papers_view.dart';
+import 'package:arxiv_app/ui/views/profile/profile.dart';
 import 'package:arxiv_app/viewmodels/home/home_viewmodel.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,10 @@ import '../../base_view.dart';
 class HomeView extends StatefulWidget {
   static const String id = 'home_view';
 
-  HomeView({this.index});
+  HomeView({this.index, this.search});
 
   int index;
+  String search;
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -72,21 +74,20 @@ class _HomeViewState extends State<HomeView>
                     )
                   : SafeArea(
                       top: false,
-                      child: IndexedStack(
-                          index: _currentIndex,
-                          children: <Widget>[
-                            PaperView(),
-                            BookMarkView(),
-                            DownloadView(),
-                            BlogView()
-                          ]),
+                      child:
+                          IndexedStack(index: _currentIndex, children: <Widget>[
+                        PaperView(search: widget.search),
+                        BookMarkView(),
+                        ProfileView(),
+                        DownloadView(),
+                        BlogView()
+                      ]),
                     ),
               bottomNavigationBar: BottomNavigationBar(
                 currentIndex: _currentIndex,
                 onTap: (int index) {
                   setState(() {
                     _currentIndex = index;
-                    print(_currentIndex);
                   });
                 },
                 items: allDestinations.map((Destination destination) {

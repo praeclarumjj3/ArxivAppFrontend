@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-Blog blogFromJson(String str) => Blog.fromJson(json.decode(str));
+List<Blog> blogFromJson(String str) =>
+    List<Blog>.from(json.decode(str).map((x) => Blog.fromJson(x)));
 
 String blogToJson(Blog data) => json.encode(data.toJson());
 
@@ -20,7 +21,7 @@ class Blog {
   int id;
   String title;
   String body;
-  int author;
+  String author;
   int votes;
 
   factory Blog.fromJson(Map<String, dynamic> json) => Blog(
