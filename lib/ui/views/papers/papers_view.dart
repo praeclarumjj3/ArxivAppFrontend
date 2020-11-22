@@ -4,7 +4,7 @@ import 'package:arxiv_app/viewmodels/papers/paper_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import '../../base_view.dart';
-import 'package:random_string/random_string.dart';
+//import 'package:random_string/random_string.dart';
 
 class PaperView extends StatefulWidget {
   static const String id = 'paper_view';
@@ -17,7 +17,7 @@ class _PaperViewState extends State<PaperView> {
   SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<Paper>> papers;
-  String _keyword = randomAlpha(1);
+  String _keyword = 'k';
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(

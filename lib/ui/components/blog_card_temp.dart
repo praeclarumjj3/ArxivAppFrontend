@@ -3,17 +3,15 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:intl/intl.dart';
 import 'package:arxiv_app/models/blog.dart';
-import 'package:arxiv_app/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 
 // ignore: must_be_immutable
 class BlogCard extends StatefulWidget {
-  BlogCard({this.blog, this.user});
+  BlogCard({this.blog});
 
   Blog blog;
-  User user;
 
 
   @override
@@ -23,7 +21,7 @@ class BlogCard extends StatefulWidget {
 class _BlogCardState extends State<BlogCard> {
   final Title = Container(
     
-    child: Text('blogName',) 
+    child: Text('blogName',style: TextStyle(fontSize: 50,)) 
   );
   final Author = Container(
 
@@ -31,11 +29,19 @@ class _BlogCardState extends State<BlogCard> {
   );
   
   final Body = Container(
-    child: Text('blogBody')
+    child: Text('blogBody',style: TextStyle(fontSize: 35,))
   );
+
   final VoteSection = Container(
 
-    child: Text('votes')
+    child: Row(
+      children: <Widget>[
+        IconButton(icon: Icon(Icons.arrow_drop_up,size: 50,color: Colors.blue[800],), onPressed: null),
+        Text('  #votes  '),
+        IconButton(icon: Icon(Icons.arrow_drop_down,size:50,color: Colors.blue[800]), onPressed: null)
+
+      ],
+    )
   );
 
   @override
@@ -55,9 +61,19 @@ class _BlogCardState extends State<BlogCard> {
             
               children: <Widget>[
                 Title,
+                Divider(
+                    thickness: ScreenUtil().setWidth(3),
+                ),
                 Author,
+                Divider(
+                    thickness: ScreenUtil().setWidth(3),
+                ),                
                 Body,
+                Divider(
+                    thickness: ScreenUtil().setWidth(3),
+                ),                
                 VoteSection,
+              
               ],
           ),
         ),

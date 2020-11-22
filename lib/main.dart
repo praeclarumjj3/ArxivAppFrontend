@@ -1,5 +1,7 @@
 import 'package:arxiv_app/ui/views/blog/blog_view.dart';
+import 'package:arxiv_app/ui/views/papers/papers_view.dart';
 import 'package:arxiv_app/ui/views/startup_view.dart';
+import 'package:arxiv_app/ui/views/home/home_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,7 +67,7 @@ class MyApp extends StatelessWidget {
                   fontSize: ScreenUtil().setSp(16, allowFontScalingSelf: true),
                   fontWeight: FontWeight.w600,
                   color: Colors.red))),
-      home: StartUpView(),
+      home: BlogView(),
     );
   }
 }
