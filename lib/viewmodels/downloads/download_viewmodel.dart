@@ -23,24 +23,6 @@ class DownloadViewModel extends BaseViewModel {
     setState(ViewState.Busy);
     dynamic result = await _paperService.getDownloads();
     if (result == false) {
-      setDownloads([
-        Bookmark(
-            id: 1,
-            title: 'Test',
-            authors: 'JJ',
-            summary: 'kk',
-            comment: 'kkskjsjs',
-            subjectClassification: 'hyuk,a',
-            category: 'hyuk,a',
-            arxivId: 'hyuk,a',
-            htmlUrl: 'hyuk,a',
-            pdfUrl: 'hyuk,a',
-            datetimeCreated: DateTime.now(),
-            datetimeModified: DateTime.now(),
-            datetimePaperPublished: DateTime.now(),
-            datetimePaperUpdated: DateTime.now(),
-            mediaUrl: null)
-      ]);
       setState(ViewState.Error);
       setErrorMessage('Downloads not found!');
     } else {

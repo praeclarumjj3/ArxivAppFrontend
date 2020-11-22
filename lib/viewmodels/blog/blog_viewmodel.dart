@@ -61,8 +61,8 @@ class BlogViewModel extends BaseViewModel {
     }
   }
 
-  void voteBlog(String id) {
-    dynamic result = _blogService.voteBlog(id);
+  void voteBlog(String id, String action) {
+    dynamic result = _blogService.voteBlog(id, action);
     if (result == false) {
       Fluttertoast.showToast(
           msg: 'Could not vote!',

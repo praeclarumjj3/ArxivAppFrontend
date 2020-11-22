@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -168,7 +167,7 @@ class _BookmarkCardState extends State<BookmarkCard> {
                       iconSize: ScreenUtil().setWidth(40),
                       icon: Icon(Icons.open_in_browser),
                       onPressed: () {
-                        _launchInBrowser(widget.bookmark.htmlUrl);
+                        _launchInBrowser(widget.bookmark.pdfUrl);
                       })
                 ]),
             Expanded(
@@ -176,32 +175,17 @@ class _BookmarkCardState extends State<BookmarkCard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(widget.bookmark.title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                .copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w300)),
-                        Expanded(
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                    DateFormat('dd/MM/yyyy').format(
-                                        widget.bookmark.datetimePaperPublished),
-                                    style:
-                                        Theme.of(context).textTheme.subtitle1)))
-                      ]),
+                  Text(widget.bookmark.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          color: Colors.black, fontWeight: FontWeight.w300)),
                   Divider(
                     thickness: ScreenUtil().setWidth(3),
                   ),
                   Align(
-                      alignment: Alignment.centerRight,
+                      alignment: Alignment.center,
                       child: Text(widget.bookmark.authors,
+                          overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.subtitle1))
                 ])),
             Align(
@@ -236,7 +220,7 @@ class _BookmarkCardState extends State<BookmarkCard> {
                           onPressed: () async {
                             if (!_isDownloaded) {
                               if (_permissionReady) {
-                                await download(widget.bookmark.pdfUrl);
+                                await download(widget.bookmark.htmlUrl);
                                 setState(() {
                                   _isDownloaded = true;
                                   widget.model.modifyDownload(
@@ -244,7 +228,7 @@ class _BookmarkCardState extends State<BookmarkCard> {
                                       widget.bookmark.arxivId,
                                       _localPath +
                                           Platform.pathSeparator +
-                                          widget.bookmark.pdfUrl
+                                          widget.bookmark.htmlUrl
                                               .split('pdf/')[1]);
                                 });
                               } else {

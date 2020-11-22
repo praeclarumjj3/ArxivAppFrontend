@@ -36,12 +36,10 @@ class LoginViewModel extends BaseViewModel {
     var authResult = await _auth.signInWithCredential(credential);
     // ignore: omit_local_variable_types
     User user = authResult.user;
-
     if (user != null) {
       assert(!user.isAnonymous);
       assert(await user.getIdToken() != null);
 
-      _localStorageService.isLoggedIn = true;
       _localStorageService.username = user.displayName;
       _localStorageService.userEmail = user.email;
       _localStorageService.userPic = user.photoURL;
@@ -64,12 +62,12 @@ class LoginViewModel extends BaseViewModel {
             fontSize: ScreenUtil().setSp(12, allowFontScalingSelf: true));
         return null;
       } else {
+        _localStorageService.isLoggedIn = true;
         setState(ViewState.Idle);
       }
       _currentUser = _auth.currentUser;
       assert(user.uid == _currentUser.uid);
       notifyListeners();
-      print('signInWithGoogle succeeded: $user');
       setState(ViewState.Idle);
       return '$user';
     } else {

@@ -14,8 +14,7 @@ class BlogService {
       locator<LocalStorageService>();
 
   Future getBlogs() async {
-    var _auth_token = _localStorageService.authToken;
-    var uri = URL + 'blogs/?auth_token=$_auth_token';
+    var uri = URL + 'blogs/';
     try {
       var response = await dio.get(uri);
       if (response.statusCode == 200) {
@@ -38,7 +37,7 @@ class BlogService {
         data: {
           'title': title,
           'body': body,
-          'auth_token': _localStorageService.authToken,
+          'author': _localStorageService.authToken,
         },
       );
       if (response.statusCode == 200) {
@@ -63,8 +62,8 @@ class BlogService {
     }
   }
 
-  Future voteBlog(String id) async {
-    var uri = URL + 'blogs/$id/vote/';
+  Future voteBlog(String id, String action) async {
+    var uri = URL + 'blogs/$id/vote/?vote=$action'; // action = 'up' or 'down'
     try {
       var response = await dio.get(uri);
       if (response.statusCode == 200) {

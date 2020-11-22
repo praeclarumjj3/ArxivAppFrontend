@@ -20,23 +20,8 @@ class PaperViewModel extends BaseViewModel {
 
   Future getPapers(String keyword) async {
     setState(ViewState.Busy);
-    dynamic result = await _paperService.getPapers(keyword);
+    dynamic result = await _paperService.getPapers(keyword.trim());
     if (result == false) {
-      setPapers([
-        Paper(
-            id: 1,
-            title: 'Test',
-            authors: 'JJ',
-            summary: 'kk',
-            comment: 'kkskjsjs',
-            subjectClassification: 'hyuk,a',
-            category: 'hyuk,a',
-            arxivId: 'hyuk,a',
-            htmlUrl: 'hyuk,a',
-            pdfUrl: 'hyuk,a',
-            datetimePaperPublished: DateTime.now(),
-            datetimePaperUpdated: DateTime.now())
-      ]);
       setState(ViewState.Error);
       setErrorMessage('Papers not found!');
     } else {

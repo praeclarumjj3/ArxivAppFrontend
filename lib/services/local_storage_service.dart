@@ -45,7 +45,7 @@ class LocalStorageService {
 
   String get username => _getFromDisk(usernameKey) ?? 'Username';
 
-  String get authToken => _getFromDisk(authTokenKey) ?? 'AuthToken';
+  int get authToken => _getFromDisk(authTokenKey) ?? -1;
 
   String get userEmail => _getFromDisk(userEmailKey) ?? 'EmailId';
 
@@ -59,7 +59,7 @@ class LocalStorageService {
     _saveToDisk(usernameKey, username);
   }
 
-  set authToken(String authToken) {
+  set authToken(int authToken) {
     _saveToDisk(authTokenKey, authToken);
   }
 
