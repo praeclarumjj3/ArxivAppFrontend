@@ -3,6 +3,7 @@ import 'package:arxiv_app/ui/views/blog/blog_view.dart';
 import 'package:arxiv_app/ui/views/bookmarks/bookmark_view.dart';
 import 'package:arxiv_app/ui/views/downloads/download_view.dart';
 import 'package:arxiv_app/ui/views/papers/papers_view.dart';
+import 'package:arxiv_app/ui/views/profile/profile.dart';
 import 'package:arxiv_app/viewmodels/home/home_viewmodel.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,7 @@ class _HomeViewState extends State<HomeView>
                           children: <Widget>[
                             PaperView(),
                             BookMarkView(),
+                            ProfileView(),
                             DownloadView(),
                             BlogView()
                           ]),

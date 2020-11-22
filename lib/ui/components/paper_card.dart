@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
+import 'package:arxiv_app/viewmodels/papers/paper_viewmodel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:arxiv_app/models/paper.dart';
-import 'package:arxiv_app/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -15,10 +15,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class PaperCard extends StatefulWidget {
-  PaperCard({this.paper, this.user});
+  PaperCard({this.paper, this.model});
 
   Paper paper;
-  User user;
+  PaperViewModel model;
 
   @override
   _PaperCardState createState() => _PaperCardState();
@@ -177,27 +177,12 @@ class _PaperCardState extends State<PaperCard> {
                             await download(widget.paper.pdfUrl);
                             setState(() {
                               _isDownloaded = true;
-                              widget.user.downloads.add(Bookmark(
-                                  id: widget.paper.id,
-                                  datetimeCreated: DateTime.now(),
-                                  datetimeModified: DateTime.now(),
-                                  title: widget.paper.title,
-                                  authors: widget.paper.authors,
-                                  summary: widget.paper.summary,
-                                  comment: widget.paper.comment,
-                                  subjectClassification:
-                                      widget.paper.subjectClassification,
-                                  category: widget.paper.category,
-                                  arxivId: widget.paper.arxivId,
-                                  htmlUrl: widget.paper.htmlUrl,
-                                  pdfUrl: widget.paper.pdfUrl,
-                                  datetimePaperPublished:
-                                      widget.paper.datetimePaperPublished,
-                                  datetimePaperUpdated:
-                                      widget.paper.datetimePaperUpdated,
-                                  mediaUrl: _localPath +
+                              widget.model.modifyDownload(
+                                  'add',
+                                  widget.paper.arxivId,
+                                  _localPath +
                                       Platform.pathSeparator +
-                                      widget.paper.pdfUrl.split('pdf/')[1]));
+                                      widget.paper.pdfUrl.split('pdf/')[1]);
                             });
                           } else {
                             _buildNoPermissionWarning();
@@ -253,48 +238,14 @@ class _PaperCardState extends State<PaperCard> {
                             if (_isBookmarked) {
                               setState(() {
                                 _isBookmarked = false;
-                                widget.user.bookmarks.remove(Bookmark(
-                                    id: widget.paper.id,
-                                    datetimeCreated: DateTime.now(),
-                                    datetimeModified: DateTime.now(),
-                                    title: widget.paper.title,
-                                    authors: widget.paper.authors,
-                                    summary: widget.paper.summary,
-                                    comment: widget.paper.comment,
-                                    subjectClassification:
-                                        widget.paper.subjectClassification,
-                                    category: widget.paper.category,
-                                    arxivId: widget.paper.arxivId,
-                                    htmlUrl: widget.paper.htmlUrl,
-                                    pdfUrl: widget.paper.pdfUrl,
-                                    datetimePaperPublished:
-                                        widget.paper.datetimePaperPublished,
-                                    datetimePaperUpdated:
-                                        widget.paper.datetimePaperUpdated,
-                                    mediaUrl: null));
+                                widget.model.modifyBookmark(
+                                    'remove', widget.paper.arxivId);
                               });
                             } else {
                               setState(() {
                                 _isBookmarked = true;
-                                widget.user.bookmarks.add(Bookmark(
-                                    id: widget.paper.id,
-                                    datetimeCreated: DateTime.now(),
-                                    datetimeModified: DateTime.now(),
-                                    title: widget.paper.title,
-                                    authors: widget.paper.authors,
-                                    summary: widget.paper.summary,
-                                    comment: widget.paper.comment,
-                                    subjectClassification:
-                                        widget.paper.subjectClassification,
-                                    category: widget.paper.category,
-                                    arxivId: widget.paper.arxivId,
-                                    htmlUrl: widget.paper.htmlUrl,
-                                    pdfUrl: widget.paper.pdfUrl,
-                                    datetimePaperPublished:
-                                        widget.paper.datetimePaperPublished,
-                                    datetimePaperUpdated:
-                                        widget.paper.datetimePaperUpdated,
-                                    mediaUrl: null));
+                                widget.model.modifyBookmark(
+                                    'add', widget.paper.arxivId);
                               });
                             }
                           }),

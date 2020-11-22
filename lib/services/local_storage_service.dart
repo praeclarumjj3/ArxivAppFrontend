@@ -6,9 +6,9 @@ class LocalStorageService {
 
   static const String isLoggedInKey = 'is_logged_in_key';
   static const String usernameKey = 'username_key';
-  static const String sessionTokenKey = 'session_token_key';
   static const String authTokenKey = 'auth_token_key';
   static const String userEmailKey = 'user_email_key';
+  static const String userPicKey = 'user_pic_key';
 
   static Future<LocalStorageService> getInstance() async {
     _instance ??= LocalStorageService();
@@ -42,10 +42,14 @@ class LocalStorageService {
   }
 
   bool get isLoggedIn => _getFromDisk(isLoggedInKey) ?? false;
+
   String get username => _getFromDisk(usernameKey) ?? 'Username';
-  String get sessionToken => _getFromDisk(sessionTokenKey) ?? 'SessionToken';
+
   String get authToken => _getFromDisk(authTokenKey) ?? 'AuthToken';
+
   String get userEmail => _getFromDisk(userEmailKey) ?? 'EmailId';
+
+  String get userPic => _getFromDisk(userPicKey) ?? 'Pic';
 
   set isLoggedIn(bool isLoggedIn) {
     _saveToDisk(isLoggedInKey, isLoggedIn);
@@ -55,15 +59,15 @@ class LocalStorageService {
     _saveToDisk(usernameKey, username);
   }
 
-  set sessionToken(String sessionToken) {
-    _saveToDisk(sessionTokenKey, sessionToken);
-  }
-
   set authToken(String authToken) {
     _saveToDisk(authTokenKey, authToken);
   }
 
   set userEmail(String mail) {
     _saveToDisk(userEmailKey, mail);
+  }
+
+  set userPic(String url) {
+    _saveToDisk(userPicKey, url);
   }
 }

@@ -1,10 +1,10 @@
 import 'package:arxiv_app/models/paper.dart';
-import 'package:arxiv_app/models/user.dart';
 import 'package:arxiv_app/ui/components/paper_card.dart';
 import 'package:arxiv_app/viewmodels/papers/paper_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import '../../base_view.dart';
+import 'package:random_string/random_string.dart';
 
 class PaperView extends StatefulWidget {
   static const String id = 'paper_view';
@@ -17,6 +17,7 @@ class _PaperViewState extends State<PaperView> {
   SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<Paper>> papers;
+  String _keyword = randomAlpha(1);
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -29,8 +30,9 @@ class _PaperViewState extends State<PaperView> {
   }
 
   void onSubmittedSearch(String value) {
-    setState(() => _scaffoldKey.currentState
-        .showSnackBar(SnackBar(content: Text('You wrote $value!'))));
+    setState(() {
+      _keyword = value;
+    });
   }
 
   _PaperViewState() {
@@ -51,7 +53,7 @@ class _PaperViewState extends State<PaperView> {
   Widget build(BuildContext context) {
     return BaseView<PaperViewModel>(
         onModelReady: (model) {
-          model.setPapers();
+          model.getPapers(_keyword);
         },
         builder: (context, model, child) => Scaffold(
             appBar: searchBar.build(context),
@@ -59,23 +61,15 @@ class _PaperViewState extends State<PaperView> {
             body: Center(
               child: model.papers.isEmpty
                   ? Text(
-                      'Search something',
-                      style: Theme.of(context).textTheme.headline2,
+                      'Search something!',
+                      style: Theme.of(context).textTheme.bodyText2,
+                      textAlign: TextAlign.center,
                     )
                   : ListView.builder(
                       itemCount: model.papers.length,
                       itemBuilder: (BuildContext ctxt, int index) {
                         return PaperCard(
-                          paper: model.papers[index],
-                          user: User(
-                              id: 1,
-                              emailAddress: 'jjjj',
-                              downloads: [],
-                              bookmarks: [],
-                              profilePicture: null,
-                              fullName: 'jshshhs',
-                              username: 'jsjsjs'),
-                        );
+                            paper: model.papers[index], model: model);
                       }),
             )));
   }

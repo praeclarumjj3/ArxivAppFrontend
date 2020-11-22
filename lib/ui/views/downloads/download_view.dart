@@ -1,5 +1,4 @@
 import 'package:arxiv_app/models/paper.dart';
-import 'package:arxiv_app/models/user.dart';
 import 'package:arxiv_app/ui/components/download_card.dart';
 import 'package:arxiv_app/viewmodels/downloads/download_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,7 @@ class _DownloadViewState extends State<DownloadView> {
   Widget build(BuildContext context) {
     return BaseView<DownloadViewModel>(
         onModelReady: (model) {
-          model.setDownloads();
+          model.getDownloads();
         },
         builder: (context, model, child) => Scaffold(
             appBar: buildAppBar(context),
@@ -37,23 +36,15 @@ class _DownloadViewState extends State<DownloadView> {
             body: Center(
               child: model.downloads.isEmpty
                   ? Text(
-                      'Search something',
-                      style: Theme.of(context).textTheme.headline2,
+                      'No Downloads!',
+                      style: Theme.of(context).textTheme.bodyText2,
+                      textAlign: TextAlign.center,
                     )
                   : ListView.builder(
                       itemCount: model.downloads.length,
                       itemBuilder: (BuildContext ctxt, int index) {
                         return DownloadCard(
-                          paper: model.downloads[index],
-                          user: User(
-                              id: 1,
-                              emailAddress: 'jjjj',
-                              downloads: [],
-                              bookmarks: [],
-                              profilePicture: null,
-                              fullName: 'jshshhs',
-                              username: 'jsjsjs'),
-                        );
+                            download: model.downloads[index], model: model);
                       }),
             )));
   }
