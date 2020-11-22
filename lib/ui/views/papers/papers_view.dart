@@ -1,9 +1,9 @@
 import 'package:arxiv_app/enums/viewstate.dart';
 import 'package:arxiv_app/models/paper.dart';
 import 'package:arxiv_app/ui/components/paper_card.dart';
-import 'package:arxiv_app/ui/views/home/home_view.dart';
 import 'package:arxiv_app/viewmodels/papers/paper_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import '../../base_view.dart';
 
@@ -23,41 +23,88 @@ class _PaperViewState extends State<PaperView> {
   SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<Paper>> papers;
+  final TextEditingController _searchQueryController = TextEditingController();
+  bool _isSearching = false;
+  String searchQuery;
 
-  AppBar buildAppBar(BuildContext context) {
+  AppBar buildAppBar(BuildContext context, PaperViewModel model) {
     return AppBar(
-        title: Text('ArxivApp',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(color: Colors.white, fontWeight: FontWeight.w400)),
-        actions: [searchBar.getSearchAction(context)]);
+      leading: _isSearching ? const BackButton() : null,
+      title: _isSearching ? _buildSearchField(model) : _buildTitle(context),
+      actions: _buildActions(model),
+    );
   }
 
-  void onSubmittedSearch(String value) {
-    Navigator.of(context).pop();
-    Future.delayed(Duration(milliseconds: 1000), () {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  HomeView(index: 0, search: value)),
-          (Route<dynamic> route) => false);
+  Widget _buildTitle(BuildContext context) {
+    return Text('ArxivApp',
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2
+            .copyWith(color: Colors.white, fontWeight: FontWeight.w400));
+  }
+
+  Widget _buildSearchField(PaperViewModel model) {
+    return TextField(
+      controller: _searchQueryController,
+      autofocus: true,
+      style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w300,
+          fontSize: ScreenUtil().setSp(14, allowFontScalingSelf: true)),
+      onSubmitted: (query) => updateSearchQuery(model, query),
+    );
+  }
+
+  List<Widget> _buildActions(PaperViewModel model) {
+    if (_isSearching) {
+      return <Widget>[
+        IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            if (_searchQueryController == null ||
+                _searchQueryController.text.isEmpty) {
+              Navigator.pop(context);
+              return;
+            }
+            _clearSearchQuery();
+          },
+        ),
+      ];
+    }
+
+    return <Widget>[
+      IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: _startSearch,
+      ),
+    ];
+  }
+
+  void _startSearch() {
+    ModalRoute.of(context)
+        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
+
+    setState(() {
+      _isSearching = true;
     });
   }
 
-  _PaperViewState() {
-    searchBar = SearchBar(
-        inBar: false,
-        buildDefaultAppBar: buildAppBar,
-        setState: setState,
-        onSubmitted: onSubmittedSearch,
-        onCleared: () {
-          print('cleared');
-        },
-        onClosed: () {
-          print('closed');
-        });
+  void updateSearchQuery(PaperViewModel model, String newQuery) {
+    model.getPapers(newQuery);
+  }
+
+  void _stopSearching() {
+    _clearSearchQuery();
+
+    setState(() {
+      _isSearching = false;
+    });
+  }
+
+  void _clearSearchQuery() {
+    setState(() {
+      _searchQueryController.clear();
+    });
   }
 
   @override
@@ -67,7 +114,7 @@ class _PaperViewState extends State<PaperView> {
           model.getPapers(widget.search);
         },
         builder: (context, model, child) => Scaffold(
-            appBar: searchBar.build(context),
+            appBar: buildAppBar(context, model),
             key: _scaffoldKey,
             body: Center(
               child: model.state == ViewState.Busy
