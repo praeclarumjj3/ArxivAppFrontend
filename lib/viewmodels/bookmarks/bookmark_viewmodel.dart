@@ -17,30 +17,12 @@ class BookmarkViewModel extends BaseViewModel {
     _navigationService.pushNamedAndRemoveUntil(id);
   }
 
-  List<Bookmark> _bookmarks = [];
+  List<dynamic> _bookmarks = [];
 
   Future getBookmarks() async {
     setState(ViewState.Busy);
     dynamic result = await _paperService.getBookmarks();
     if (result == false) {
-      setBookmarks([
-        Bookmark(
-            id: 1,
-            title: 'Test',
-            authors: 'JJ',
-            summary: 'kk',
-            comment: 'kkskjsjs',
-            subjectClassification: 'hyuk,a',
-            category: 'hyuk,a',
-            arxivId: 'hyuk,a',
-            htmlUrl: 'hyuk,a',
-            pdfUrl: 'hyuk,a',
-            datetimeCreated: DateTime.now(),
-            datetimeModified: DateTime.now(),
-            datetimePaperPublished: DateTime.now(),
-            datetimePaperUpdated: DateTime.now(),
-            mediaUrl: null)
-      ]);
       setState(ViewState.Error);
       setErrorMessage('Bookmarks not found!');
     } else {
@@ -88,5 +70,5 @@ class BookmarkViewModel extends BaseViewModel {
     }
   }
 
-  List<Bookmark> get bookmarks => _bookmarks;
+  List<dynamic> get bookmarks => _bookmarks;
 }

@@ -19,8 +19,19 @@ class PaperService {
     try {
       var response = await dio.get(uri);
       if (response.statusCode == 200) {
-        final papers = Paper.fromJson(response.data.Results);
-        return papers;
+        final papers = response.data['Results'];
+        var papersList = <Paper>[];
+        for (var i = 0; i < papers['arxiv_id'].length; i++) {
+          papersList.add(Paper(
+              id: i,
+              title: papers['title'][i],
+              authors: papers['authors'][i],
+              category: papers['category'][i],
+              arxivId: papers['arxiv_id'][i],
+              htmlUrl: papers['html_url'][i],
+              pdfUrl: papers['pdf_url'][i]));
+        }
+        return papersList;
       } else {
         return false;
       }
@@ -38,7 +49,7 @@ class PaperService {
         data: {
           'action': action, // 'add' or 'remove'
           'arxiv_id': arxivId, // arxiv_id of paper that needs to be bookmarked
-          'auth_token': _localStorageService.authToken,
+          'uid': _localStorageService.authToken,
         },
       );
       if (response.statusCode == 200) {
@@ -64,16 +75,17 @@ class PaperService {
   }
 
   Future getBookmarks() async {
-    var uri = URL + 'users/bookmark/';
+    var auth = _localStorageService.authToken;
+    var uri = URL + 'users/$auth/';
     try {
-      var response = await dio.post(
-        uri,
-        data: {
-          'auth_token': _localStorageService.authToken,
-        },
-      );
+      var response = await dio.get(uri);
       if (response.statusCode == 200) {
-        final bookmarks = Bookmark.fromJson(response.data);
+        var bookmarks = <Bookmark>[];
+        if (response.data['bookmarks'].length > 0) {
+          for (var i = 0; i < response.data['bookmarks'].length; i++) {
+            bookmarks.add(Bookmark.fromJson(response.data['bookmarks'][i]));
+          }
+        }
         return bookmarks;
       } else {
         return false;
@@ -105,7 +117,7 @@ class PaperService {
           'action': action,
           'arxiv_id': arxivId,
           'download_url': downloadURL,
-          'auth_token': _localStorageService.authToken,
+          'uid': _localStorageService.authToken,
         },
       );
       if (response.statusCode == 200) {
@@ -131,16 +143,17 @@ class PaperService {
   }
 
   Future getDownloads() async {
-    var uri = URL + 'users/download/';
+    var auth = _localStorageService.authToken;
+    var uri = URL + 'users/$auth/';
     try {
-      var response = await dio.post(
-        uri,
-        data: {
-          'auth_token': _localStorageService.authToken,
-        },
-      );
+      var response = await dio.get(uri);
       if (response.statusCode == 200) {
-        final downloads = Bookmark.fromJson(response.data);
+        var downloads = <Bookmark>[];
+        if (response.data['downloads'].length > 0) {
+          for (var i = 0; i < response.data['downloads'].length; i++) {
+            downloads.add(Bookmark.fromJson(response.data['downloads'][i]));
+          }
+        }
         return downloads;
       } else {
         return false;

@@ -9,6 +9,7 @@ class CustomRouter {
         return MaterialPageRoute(
             builder: (_) => HomeView(
                   index: 0,
+                  search: 'DEAP',
                 ));
       case LoginView.id:
         return MaterialPageRoute(builder: (_) => LoginView());
