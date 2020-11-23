@@ -38,7 +38,7 @@ class _BlogCardState extends State<BlogCard> {
         child: Padding(
             padding:
                 EdgeInsets.only(left: 16.0, right: 16.0, top: 5, bottom: 5),
-            child: Text(widget.blog.author,
+            child: Text(widget.blog.author.toString(),
                 style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic))));
   }
 

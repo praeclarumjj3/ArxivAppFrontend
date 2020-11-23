@@ -47,13 +47,11 @@ class BlogViewModel extends BaseViewModel {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: ScreenUtil().setSp(12, allowFontScalingSelf: true));
-    } else {
-      getBlogs();
     }
   }
 
   void voteBlog(int id, String action) {
-    dynamic result = _blogService.voteBlog(id, action);
+    dynamic result = _blogService.voteBlog(id.toString(), action);
     if (result == false) {
       Fluttertoast.showToast(
           msg: 'Could not vote!',
@@ -63,8 +61,6 @@ class BlogViewModel extends BaseViewModel {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: ScreenUtil().setSp(12, allowFontScalingSelf: true));
-    } else {
-      getBlogs();
     }
   }
 
