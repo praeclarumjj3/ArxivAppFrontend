@@ -76,4 +76,16 @@ class BlogService {
       return false;
     }
   }
+  Future getNumberOfVotes(String id) async {
+    var uri = URL + 'blogs/$id';
+    try {
+      var response = await dio.get(uri);
+      if (response.statusCode == 200) {
+        return response.data['votes'];
+      } 
+    } catch (e) {
+      print('Caught Exception: $e');
+      return false;
+    }
+  }  
 }

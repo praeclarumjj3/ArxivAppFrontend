@@ -1,5 +1,4 @@
 import 'package:arxiv_app/models/blog.dart';
-import 'package:arxiv_app/ui/views/blog/create_blog_view.dart';
 import 'package:arxiv_app/viewmodels/blog/blog_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -7,14 +6,14 @@ import '../../base_view.dart';
 import 'package:arxiv_app/ui/components/blog_card.dart';
 import 'package:arxiv_app/models/blog.dart';
 
-class BlogView extends StatefulWidget {
+class CreateBlogView extends StatefulWidget {
   static const String id = 'blog_view';
 
   @override
-  _BlogViewState createState() => _BlogViewState();
+  _CreateBlogViewState createState() => _CreateBlogViewState();
 }
 
-class _BlogViewState extends State<BlogView> {
+class _CreateBlogViewState extends State<CreateBlogView> {
   SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<Blog>> papers;
