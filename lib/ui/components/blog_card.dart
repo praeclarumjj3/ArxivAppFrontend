@@ -34,7 +34,13 @@ class _BlogCardState extends State<BlogCard> {
     child: Row(
       children: <Widget>[
         IconButton(icon: Icon(Icons.arrow_drop_up,size: 50,color: Colors.blue[800],), onPressed: null),
+        Divider(
+            thickness: ScreenUtil().setWidth(3),
+        ),
         Text('  #votes  '),
+        Divider(
+            thickness: ScreenUtil().setWidth(3),
+        ),        
         IconButton(icon: Icon(Icons.arrow_drop_down,size:50,color: Colors.blue[800]), onPressed: null)
 
       ],

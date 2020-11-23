@@ -3,7 +3,7 @@ import 'package:arxiv_app/viewmodels/blog/blog_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import '../../base_view.dart';
-import 'package:arxiv_app/ui/components/blog_card_temp.dart';
+import 'package:arxiv_app/ui/components/blog_card.dart';
 import 'package:arxiv_app/models/blog.dart';
 
 class BlogView extends StatefulWidget {
