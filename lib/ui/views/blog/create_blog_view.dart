@@ -1,23 +1,19 @@
-import 'package:arxiv_app/models/blog.dart';
-import 'package:arxiv_app/viewmodels/blog/blog_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_search_bar/flutter_search_bar.dart';
-import '../../base_view.dart';
-import 'package:arxiv_app/ui/components/blog_card.dart';
-import 'package:arxiv_app/models/blog.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 
 class CreateBlogView extends StatefulWidget {
-  static const String id = 'blog_view';
+  static const String id = 'create_blog_view';
 
   @override
-  _CreateBlogViewState createState() => _CreateBlogViewState();
+  CreateBlogViewState createState() => CreateBlogViewState();
 }
 
-class _CreateBlogViewState extends State<CreateBlogView> {
-  SearchBar searchBar;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Future<List<Blog>> papers;
 
+
+
+
+class CreateBlogViewState extends State<CreateBlogView> {
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
         title: Text('ArxivApp',
@@ -25,28 +21,48 @@ class _CreateBlogViewState extends State<CreateBlogView> {
                 .textTheme
                 .bodyText2
                 .copyWith(color: Colors.white, fontWeight: FontWeight.w400)));
-  }
-
+  }  
+  Widget InputField(String helperText) {
+    return Padding(
+        padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(10),
+            ScreenUtil().setWidth(10), ScreenUtil().setWidth(10), 0),
+        child: TextFormField(
+          inputFormatters:[LengthLimitingTextInputFormatter(5000)],
+          decoration: InputDecoration(
+              hintText: helperText,
+              contentPadding: EdgeInsets.all(15),
+              border: InputBorder.none,
+              filled: true,
+              fillColor: Colors.blue[100]),  
+        ));
+  }  
   @override
   Widget build(BuildContext context) {
-    return BaseView<BlogViewModel>(
-        builder: (context, model, child) => Scaffold(
-          appBar: buildAppBar(context),
-          key: _scaffoldKey,
-          body: Center(child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return BlogCard(
-              
-                );
-            }
-          )),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: (){
-              
-            }, 
-            label: Text('Create Blog'),
-            icon: Icon(Icons.add,),
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body : Container(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            InputField('Enter Blog Title'),
+            InputField('Enter Blog Body'),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child:FloatingActionButton.extended(
+                onPressed: (){
+                  
+                },
+                label:Text('Submit Entry'),
+
+              ),              
+            
+            ),
+          ],
         )
-    ));
+      )
+    );
   }
+
+
 }
