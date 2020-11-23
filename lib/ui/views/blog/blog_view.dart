@@ -31,13 +31,22 @@ class _BlogViewState extends State<BlogView> {
   Widget build(BuildContext context) {
     return BaseView<BlogViewModel>(
         builder: (context, model, child) => Scaffold(
-            appBar: buildAppBar(context),
-            key: _scaffoldKey,
-            body: Center(child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-              return BlogCard(
-                
-              );
-            }))));
+          appBar: buildAppBar(context),
+          key: _scaffoldKey,
+          body: Center(child: ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return BlogCard(
+              
+                );
+            }
+          )),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: (){
+
+            }, 
+            label: Text('Create Blog'),
+            icon: Icon(Icons.add,),
+        )
+    ));
   }
 }

@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                   fontSize: ScreenUtil().setSp(16, allowFontScalingSelf: true),
                   fontWeight: FontWeight.w600,
                   color: Colors.red))),
-      home: BlogView(),
+      home: StartUpView(),
     );
   }
 }

@@ -18,33 +18,57 @@ class BlogCard extends StatefulWidget {
 class _BlogCardState extends State<BlogCard> {
   final Title = Container(
     
-    child: Text('blogName',style: TextStyle(fontSize: 50,)) 
+    child: Padding(
+      padding: EdgeInsets.all(16.0),
+      child:Text('How To Get A Chapo?',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold))
+    ) 
   );
   final Author = Container(
 
-    child: Text('blogAuthor',style: TextStyle(fontSize: 20,))
+    child: Padding(
+      padding: EdgeInsets.only(left:16.0,right:16.0,top:5,bottom:5),
+      child:Text('Ayushman Tripathy',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic))
+    ) 
   );
   
   final Body = Container(
-    child: Text('blogBody',style: TextStyle(fontSize: 35,))
+    child: Padding(
+      padding: EdgeInsets.all(16.0),
+      child:Text('Contact Shasha Bhai. Ask Him. Bug Him. Untill he gets frustrated and gives a chapo.',style: TextStyle(fontSize: 20,))
+    )     
   );
 
   final VoteSection = Container(
+    child: Padding(
+      padding: EdgeInsets.all(16.0),
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.thumb_up_outlined,
+            color: Colors.blue[800],), 
+            onPressed: (){
 
-    child: Row(
-      children: <Widget>[
-        IconButton(icon: Icon(Icons.arrow_drop_up,size: 50,color: Colors.blue[800],), onPressed: null),
-        Divider(
-            thickness: ScreenUtil().setWidth(3),
-        ),
-        Text('  #votes  '),
-        Divider(
-            thickness: ScreenUtil().setWidth(3),
-        ),        
-        IconButton(icon: Icon(Icons.arrow_drop_down,size:50,color: Colors.blue[800]), onPressed: null)
+            },
+          ),
+          VerticalDivider(
+              thickness: ScreenUtil().setWidth(10),color: Colors.black,
+          ),
+          Text('  #votes  ',style: TextStyle(fontSize: 20,fontStyle: FontStyle.italic)),
+          VerticalDivider(
+              thickness: ScreenUtil().setWidth(10),color: Colors.black,
+          ),        
+          IconButton(
+            icon: Icon(Icons.thumb_down_outlined,
+            color: Colors.blue[800]), 
+            onPressed: (){
+              
+            }
+          )
 
-      ],
-    )
+        ],
+      )
+    )  
+      
   );
 
   @override
@@ -64,17 +88,17 @@ class _BlogCardState extends State<BlogCard> {
             
               children: <Widget>[
                 Title,
-                Divider(
-                    thickness: ScreenUtil().setWidth(3),
-                ),
+                // Divider(
+                //     thickness: ScreenUtil().setWidth(3),
+                // ),
                 Author,
-                Divider(
-                    thickness: ScreenUtil().setWidth(3),
-                ),                
+                // Divider(
+                //     thickness: ScreenUtil().setWidth(3),
+                // ),                
                 Body,
-                Divider(
-                    thickness: ScreenUtil().setWidth(3),
-                ),                
+                // Divider(
+                //     thickness: ScreenUtil().setWidth(3),
+                // ),                
                 VoteSection,
               
               ],
