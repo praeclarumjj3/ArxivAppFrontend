@@ -21,14 +21,14 @@ class Blog {
   int id;
   String title;
   String body;
-  int author;
+  String author;
   int votes;
 
   factory Blog.fromJson(Map<String, dynamic> json) => Blog(
         id: json['id'],
         title: json['title'],
         body: json['body'],
-        author: json['author'],
+        author: json['author']['full_name'],
         votes: json['votes'],
       );
 

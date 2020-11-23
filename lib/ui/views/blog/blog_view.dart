@@ -1,5 +1,6 @@
 import 'package:arxiv_app/enums/viewstate.dart';
 import 'package:arxiv_app/ui/views/blog/create_blog_view.dart';
+import 'package:arxiv_app/ui/views/home/home_view.dart';
 import 'package:arxiv_app/viewmodels/blog/blog_viewmodel.dart';
 import 'package:flutter/material.dart';
 import '../../base_view.dart';
@@ -17,11 +18,29 @@ class _BlogViewState extends State<BlogView> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-        title: Text('ArxivApp',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(color: Colors.white, fontWeight: FontWeight.w400)));
+      automaticallyImplyLeading: true,
+      title: Text('ArxivApp',
+          style: Theme.of(context)
+              .textTheme
+              .bodyText2
+              .copyWith(color: Colors.white, fontWeight: FontWeight.w400)),
+      leading: IconButton(
+          icon: Icon(
+            Icons.refresh,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => HomeView(
+                          index: 4,
+                          search: 'DEAP',
+                        )),
+                (Route<dynamic> route) => false);
+          }),
+      centerTitle: false,
+    );
   }
 
   @override
