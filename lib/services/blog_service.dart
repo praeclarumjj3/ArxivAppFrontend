@@ -62,7 +62,7 @@ class BlogService {
     }
   }
 
-  Future voteBlog(String id, String action) async {
+  Future voteBlog(int id, String action) async {
     var uri = URL + 'blogs/$id/vote/?vote=$action'; // action = 'up' or 'down'
     try {
       var response = await dio.get(uri);
@@ -76,16 +76,4 @@ class BlogService {
       return false;
     }
   }
-  Future getNumberOfVotes(String id) async {
-    var uri = URL + 'blogs/$id';
-    try {
-      var response = await dio.get(uri);
-      if (response.statusCode == 200) {
-        return response.data['votes'];
-      } 
-    } catch (e) {
-      print('Caught Exception: $e');
-      return false;
-    }
-  }  
 }

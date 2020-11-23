@@ -23,15 +23,6 @@ class BlogViewModel extends BaseViewModel {
     setState(ViewState.Busy);
     dynamic result = await _blogService.getBlogs();
     if (result == false) {
-      setBlogs([
-        Blog(
-          id: 1,
-          title: 'Joshuah',
-          body: 'joblessness',
-          author: 'saltiness',
-          votes: 0,
-        )
-      ]);
       setState(ViewState.Error);
       setErrorMessage('Blogs not found!');
     } else {
@@ -61,7 +52,7 @@ class BlogViewModel extends BaseViewModel {
     }
   }
 
-  void voteBlog(String id, String action) {
+  void voteBlog(int id, String action) {
     dynamic result = _blogService.voteBlog(id, action);
     if (result == false) {
       Fluttertoast.showToast(

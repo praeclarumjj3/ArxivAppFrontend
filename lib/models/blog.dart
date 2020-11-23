@@ -25,12 +25,12 @@ class Blog {
   int votes;
 
   factory Blog.fromJson(Map<String, dynamic> json) => Blog(
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-      author: json['author'],
-      votes: json['votes'],
-  );
+        id: json['id'],
+        title: json['title'],
+        body: json['body'],
+        author: json['author'],
+        votes: json['votes'],
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -38,5 +38,5 @@ class Blog {
         'body': body,
         'author': author,
         'votes': votes,
-  };
+      };
 }
