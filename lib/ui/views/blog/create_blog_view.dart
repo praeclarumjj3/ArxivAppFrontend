@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+=======
+import 'package:flutter_search_bar/flutter_search_bar.dart';
+import '../../base_view.dart';
+import 'package:arxiv_app/ui/components/blog_card.dart';
+>>>>>>> 4b5884a46d4540b875d6a5a3f875c83291b2b99e
 
 class CreateBlogView extends StatefulWidget {
   static const String id = 'create_blog_view';

@@ -1,5 +1,4 @@
 import 'package:arxiv_app/enums/viewstate.dart';
-import 'package:arxiv_app/models/paper.dart';
 import 'package:arxiv_app/ui/components/paper_card.dart';
 import 'package:arxiv_app/viewmodels/papers/paper_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,6 @@ class PaperView extends StatefulWidget {
 class _PaperViewState extends State<PaperView> {
   SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Future<List<Paper>> papers;
   final TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery;

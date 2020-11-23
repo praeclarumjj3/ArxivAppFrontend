@@ -18,7 +18,12 @@ class BlogService {
     try {
       var response = await dio.get(uri);
       if (response.statusCode == 200) {
-        final blogs = Blog.fromJson(response.data);
+        var blogs = <Blog>[];
+        if (response.data.length > 0) {
+          for (var i = 0; i < response.data.length; i++) {
+            blogs.add(Blog.fromJson(response.data[i]));
+          }
+        }
         return blogs;
       } else {
         return false;
@@ -76,16 +81,4 @@ class BlogService {
       return false;
     }
   }
-  Future getNumberOfVotes(String id) async {
-    var uri = URL + 'blogs/$id';
-    try {
-      var response = await dio.get(uri);
-      if (response.statusCode == 200) {
-        return response.data['votes'];
-      } 
-    } catch (e) {
-      print('Caught Exception: $e');
-      return false;
-    }
-  }  
 }
