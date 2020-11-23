@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'locator.dart';
 import 'services/navigation_service.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'ui/router.dart';
 
 Future<void> main() async {
