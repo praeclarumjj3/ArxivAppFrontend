@@ -1,4 +1,5 @@
 import 'package:arxiv_app/enums/viewstate.dart';
+import 'package:arxiv_app/ui/views/blog/create_blog_view.dart';
 import 'package:arxiv_app/viewmodels/blog/blog_viewmodel.dart';
 import 'package:flutter/material.dart';
 import '../../base_view.dart';
@@ -56,11 +57,13 @@ class _BlogViewState extends State<BlogView> {
                                 }))),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) =>
-                //       ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CreateBlogView(
+                            model: model,
+                          )),
+                );
               },
               label: Text('Create Blog'),
               icon: Icon(

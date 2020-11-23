@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'locator.dart';
 import 'services/navigation_service.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:arxiv_app/ui/views/blog/create_blog_view.dart';
 import 'ui/router.dart';
 
 Future<void> main() async {
@@ -64,7 +63,7 @@ class MyApp extends StatelessWidget {
                   fontSize: ScreenUtil().setSp(16, allowFontScalingSelf: true),
                   fontWeight: FontWeight.w600,
                   color: Colors.red))),
-      home: CreateBlogView(),
+      home: StartUpView(),
     );
   }
 }
