@@ -184,7 +184,8 @@ class _BookmarkCardState extends State<BookmarkCard> {
                   ),
                   Align(
                       alignment: Alignment.center,
-                      child: Text(widget.bookmark.authors,
+                      child: Text(
+                          widget.bookmark.authors.replaceAll('&#&', ', '),
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.subtitle1))
                 ])),
