@@ -2,7 +2,7 @@
 
 ![Dart CI](https://github.com/praeclarumjj3/ArxivAppFrontend/workflows/Dart%20CI/badge.svg?branch=master)
 ![Framework: Flutter](https://img.shields.io/badge/Framework-Flutter-blue.svg)
-
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ## Overview
 
 **ArxivApp** lets you *read, bookmark and download* papers from arXiv.org. It also has a *forum screen* that lets you read and create notes/blogs about the different research papers you read!
